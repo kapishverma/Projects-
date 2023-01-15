@@ -1,0 +1,30 @@
+package Tic_Tac_Toe_game;
+
+public class player_class {
+    private String name;
+    private char Symbol;
+    
+    public player_class(String name , char symbol) {
+  	  setName(name);
+  	  setSymbol(symbol);  
+    }
+
+	public void setSymbol(char symbol) {
+		if(symbol != '\0')	
+	      	   this.Symbol = symbol;
+	}
+	public char getSymbol() {
+		return this.Symbol;
+	}
+
+	public void setName(String name) {
+		 if(!name.isEmpty())	
+    	   this.name = name;         
+	}
+	
+	public String getName() {
+	    return this.name;
+	}	
+}
+
+
