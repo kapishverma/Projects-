@@ -1,0 +1,82 @@
+package Tic_Tac_Toe_game;
+
+import java.util.Scanner;
+public class tic_tac_toe {
+
+	private player_class p1, p2;
+	private board_class board;
+	
+	public static void main(String[] args) {
+        tic_tac_toe t =new tic_tac_toe();
+        t.startGame();	
+	}
+
+	private void startGame() {
+		// take player input
+		Scanner s = new Scanner(System.in);
+		p1 = takePlayerInput(1);
+		p2 = takePlayerInput(2);
+        while(p1.getSymbol()== p2.getSymbol()) {
+        	System.out.println(" symbol is alreday taken!!"
+        			+ "please enter the symbol again");
+        	p2.setSymbol(s.next().charAt(0));
+        }
+      
+		// create the board
+        board = new board_class(p1.getSymbol() , p2.getSymbol()); 
+        
+        // play the game
+        boolean p1Turn = true;
+        int move = board_class.INCOMPLETE;
+        
+        while(move == board_class.INCOMPLETE || move == board_class.INVALIDMOVE) {
+        	if(p1Turn) {
+        		System.out.println("player 1 - "+ p1.getName()+"'s turn");
+        		System.out.println("Enter x and y coordinates");
+        		int x = s.nextInt();
+        		int y = s.nextInt();
+        	// make the move, if it valid and tell us the status of game
+                  move = board.move(p1.getSymbol() , x , y);
+                        if(move == board_class.INVALIDMOVE) {
+                			System.out.println("invalid move !!! ,PLEASE ENTER A VALID COORDINATES");
+                			continue;
+                        }
+        		}else {
+        			System.out.println("player 2 - "+ p2.getName()+"'s turn");
+            		System.out.println("Enter x and y coordinates");
+            		int x = s.nextInt();
+            		int y = s.nextInt();
+            	// make the move, if it valid and tell us the status of game
+                    move = board.move(p2.getSymbol() , x , y);
+                    if(move == board_class.INVALIDMOVE){
+            			System.out.println("invalid move !!! ,PLEASE ENTER A VALID COORDINATES");
+            			continue;
+                    }                    
+        	}
+        	p1Turn = !p1Turn;// p1 turn is not of p1 turn , if false change to true , else change to false
+        	board.print();
+        }
+        
+        if(move == board_class.PLAYER1WINS) {
+			System.out.println("player 1 - "+ p1.getName()+" has won the game !!!");
+			return;
+		}else if(move == board_class.PLAYER2WINS) {
+			System.out.println("player 2 - "+ p2.getName()+" has won the game !!!");
+			return;
+		}else if(move == board_class.DRAW) {
+			System.out.println("match is DRAW :)");
+			return;
+		}
+	}
+
+	private player_class  takePlayerInput(int num) {
+		Scanner s = new Scanner(System.in);
+		System.out.println("Enter Player "+num+" name: ");
+		String name = s.nextLine();
+		System.out.println("Enter Player "+num+" symbol: ");
+		char symbol = s.next().charAt(0);
+		player_class p = new player_class(name, symbol);
+		return p; 
+	}
+
+} 
